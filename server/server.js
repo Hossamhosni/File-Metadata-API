@@ -3,7 +3,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
+const upload = multer({dest:'uploads/'});
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -16,7 +16,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
-	res.json(req.file);
+	res.json({
+		"original name": req.file.originalname,
+		"encoding": req.file.encoding,
+		"size": req.file.size
+	});
 });
 
 app.listen(port, () => {
